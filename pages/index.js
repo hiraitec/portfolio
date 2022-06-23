@@ -1,209 +1,135 @@
-import Head from 'next/head'
+import * as React from 'react';
+import { client } from "../libs/client";
+import Box from '@mui/material/Box';
+import Card from '../components/Molecules/card';
+import Chip from '@mui/material/Chip';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Grid from '@mui/material/Grid';
+import ResumeTable from '../components/Organisms/resume_table';
+import Typography from '@mui/material/Typography';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
+import StarIcon from '@mui/icons-material/Star';
 
-export default function Home() {
+function getSkillLevelIcon(order) {
+  switch(order){
+    case 1:
+      return <StarIcon/>
+    case 2:
+      return <StarHalfIcon/>
+    case 3:
+      return <StarBorderIcon/>
+  }
+  return;
+}
+
+export default function Home({profile, resume, category, level, skills}) {
   return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+    <>
+      <Typography variant="h2" align="center">{profile.name}</Typography>
+      <div dangerouslySetInnerHTML={{ __html: profile.about_site }}></div>
+      <div id="resume">
+        <Card title="RESUME" subtitle="職務経歴">
+          <ResumeTable resume={resume}></ResumeTable>
+        </Card>
+      </div>
+      <div id="skill">
+        <Card title="SKILL" subtitle="技術">
+          <div dangerouslySetInnerHTML={{ __html: profile.about_skill }}></div>
+          <div style={{ 'margin-bottom': '30px' }}>
+            {level.map((item) => (
+              <Chip
+                icon={getSkillLevelIcon(item.order)}
+                label={item.name}
+                size="small"
+                style={{ margin: '3px' }}
+                />
+            ))}
+          </div>
+          {category.map((item) => (
+            <>
+              <Typography variant="h6">{item.name}</Typography>
+              <div style={{ 'margin-bottom': '15px' }}>
+                {skills[item.name].map((skill) => (
+                  <Chip
+                    icon={getSkillLevelIcon(skill.level.order)}
+                    size="small"
+                    label={skill.name}
+                    variant="outlined"
+                    style={{ margin: '3px' }}
+                  />
+                ))}
+              </div>
+            </>
+          ))}
+        </Card>
+      </div>
+      <div id="product">
+        <Card title="PRODUCT" subtitle="制作物">
+          <div dangerouslySetInnerHTML={{ __html: profile.about_product }}></div>
+        </Card>
+      </div>
+      <div id="about-me">
+        <Card title="ABOUT ME" subtitle="プロフィール">
+          <Box sx={{ flexGrow: 2 }}>
+            <Grid container spacing={2}>
+              <Grid container item xs={12} sm={3} justifyContent="center" alignItems="center">
+                <img src={profile.icon.url}></img>
+              </Grid>
+              <Grid item xs={12} sm={9} justifyContent="center" alignItems="center">
+                <div dangerouslySetInnerHTML={{ __html: profile.about_me }}></div>
+                <Chip
+                  avatar={<GitHubIcon></GitHubIcon>}
+                  label="GitHub"
+                  component="a"
+                  href={profile.url_github}
+                  variant="outlined"
+                  clickable
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Card>
+      </div>
+    </>
   )
+}
+
+function classifySkill(skills) {
+  var cSkill = {}
+  for(var i=0; i<skills.length; i++) {
+    if(!cSkill[skills[i].category.name]){
+      cSkill[skills[i].category.name] = [];
+    }
+    cSkill[skills[i].category.name].push(skills[i]);
+  }
+  Object.keys(cSkill).forEach(function (key) {
+    cSkill[key].sort((a, b) => {
+      return a.level.order - b.level.order;
+    })
+  })
+
+  return cSkill
+}
+
+export async function getStaticProps() {
+  const profile = await client.get({ endpoint: 'profile' });
+  const resume = await client.get({ endpoint: 'resume' });
+  const skillCategory = await client.get({ endpoint: 'skill-category', queries: {fields: 'name'}  });
+  const skillLevel = await client.get({ endpoint: 'skill-level' });
+  const skill = await client.get({ endpoint: 'skill', queries: {limit: 100, fields: 'id,category,name,level'} });
+  const product = await client.get({ endpoint: 'product' });
+
+  return {
+    props: {
+      profile: profile,
+      resume: resume.contents,
+      category: skillCategory.contents,
+      level: skillLevel.contents,
+      skills: classifySkill(skill.contents),
+      products: product.contents,
+    },
+  };
 }
