@@ -23,7 +23,7 @@ function getSkillLevelIcon(order) {
   return;
 }
 
-export default function Home({profile, resume, category, level, skills}) {
+export default function Home({profile, resume, category, level, skills, products}) {
   return (
     <>
       <Typography variant="h2" align="center">{profile.name}</Typography>
@@ -67,6 +67,29 @@ export default function Home({profile, resume, category, level, skills}) {
       <div id="product">
         <Card title="PRODUCT" subtitle="制作物">
           <div dangerouslySetInnerHTML={{ __html: profile.about_product }}></div>
+          {products.map((product) => (
+            <Box sx={{ flexGrow: 2 }}>
+              <Grid container spacing={2}>
+                <Grid container item xs={12} sm={3} justifyContent="center" alignItems="center">
+                  <img src={product.image.url}></img>
+                </Grid>
+                <Grid item xs={12} sm={9} justifyContent="center" alignItems="center">
+                  <Typography variant="h6">{product.title}</Typography>
+                  <div dangerouslySetInnerHTML={{ __html: product.detail }}></div>
+                  <Chip
+                    avatar={<GitHubIcon></GitHubIcon>}
+                    label="GitHub"
+                    component="a"
+                    href={product.url_src}
+                    variant="outlined"
+                    clickable
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          ))}
         </Card>
       </div>
       <div id="about-me">
